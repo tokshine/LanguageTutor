@@ -15,6 +15,9 @@ namespace LanguageTutor.Pages.Language
         private readonly IConfiguration configuration;
         private readonly ILanguageData languageData;
 
+        [BindProperty(SupportsGet = true)]//binding enable for a get operation
+        public string SearchTerm { get; set; }
+
         public ListModel(IConfiguration config, ILanguageData languageData)
         {
             configuration = config;
@@ -25,10 +28,10 @@ namespace LanguageTutor.Pages.Language
         [TempData]
         public string FeedMessage { get; set; }
         public IEnumerable<LanguageText> languageTexts { get; set; }
-        public void OnGet()
+        public void OnGet(string searchTerm)
         {
             Message = configuration["Message"];
-            languageTexts = languageData.GetAll();
+            languageTexts = languageData.GetAll(SearchTerm);
 
         }
     }

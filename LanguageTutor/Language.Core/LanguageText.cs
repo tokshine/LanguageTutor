@@ -9,7 +9,9 @@ namespace LanguageTutor.Core
         NONE,
         FRENCH,
         ENGLISH,
-        YORUBA
+        YORUBA,
+        SPANISH,
+        URHOBO
     }
     public class LanguageText
     {

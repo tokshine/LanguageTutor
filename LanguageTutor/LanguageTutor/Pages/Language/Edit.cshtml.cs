@@ -30,9 +30,10 @@ namespace LanguageTutor.Web.Pages.Language
             if (id.HasValue)
             {
                 LanguageText = languageData.GetById(id.Value);
+                ViewData["Title"] = "Edit";
             }
             else {
-
+                ViewData["Title"] = "Add a word/phrase";
                 LanguageText = new LanguageText();
             }
             
@@ -47,7 +48,15 @@ namespace LanguageTutor.Web.Pages.Language
 
         public IActionResult OnPost()
         {
-            //POST-GET-REDIRECT  not sure it is not called post redirect get
+            //POST/REDIRECT/GET  PRINCIPLE
+
+            if (LanguageText.LanguageType == LanguageType.NONE)
+            {
+                Languages = htmlHelper.GetEnumSelectList<LanguageType>();
+                ModelState.AddModelError("","Select a Language");
+                return Page();
+            }
+
             if (!ModelState.IsValid)
             {
                 Languages = htmlHelper.GetEnumSelectList<LanguageType>();
@@ -65,7 +74,9 @@ namespace LanguageTutor.Web.Pages.Language
             }
             
             languageData.Commit();
-            return RedirectToPage("./List",new  { FeedMessage = "Language Saved"});
+            TempData["Message"] =   "Language Saved";
+            return RedirectToPage("./ClientLanguages");
+            //return RedirectToPage("./List");
         }
     }
 }

@@ -1,13 +1,43 @@
 ﻿@page
 @model ListModel
 @{
-
+    ViewBag.Title = "Overview";
 }
 
 
 @Model.Message
 
-@Model.FeedMessage
+@*https://www.learnrazorpages.com/razor-pages/tempdata*@
+@*@TempData["FeedMessage"]*@
+
+
+
+<h1>Lanaguage Administration</h1>
+
+<form method="get">
+    <div class="form-group">
+        <div class="input-group">
+            <input type="search" class="form-control"
+                   asp-for="SearchTerm" />
+            <span class="input-group-btn">
+                <button class="btn btn-default">
+                    <i class="glyphicon glyphicon-search"></i>
+                </button>
+            </span>
+        </div>
+    </div>
+</form>
+
+
+
+@foreach (var languageText in Model.languageTexts)
+{
+    <partial name="_Summary" model="languageText" />
+    
+}
+
+
+
 
 @if (Model.FeedMessage != null)
 {
