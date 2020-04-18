@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using LanguageTutor.Core;
 using LanguageTutor.Data;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -14,16 +15,18 @@ namespace LanguageTutor.Web.Pages.Language
     {
         private readonly ILanguageData languageData;
         private readonly IHtmlHelper htmlHelper;
+        private readonly UserManager<LanguageUser> _userManager;
 
         [BindProperty] // 2 way binding
         public LanguageText LanguageText { get; set; }
         
 
         public IEnumerable<SelectListItem> Languages { get; set; }
-        public EditModel(ILanguageData languageData,IHtmlHelper htmlHelper)
+        public EditModel(ILanguageData languageData,IHtmlHelper htmlHelper, UserManager<LanguageUser> userManager)
         {
             this.languageData = languageData;
             this.htmlHelper = htmlHelper;
+            _userManager = userManager;
         }
         public IActionResult OnGet(int? id)
         {
@@ -46,7 +49,7 @@ namespace LanguageTutor.Web.Pages.Language
             return Page();
         }
 
-        public IActionResult OnPost()
+        public  async Task<IActionResult> OnPost()
         {
             //POST/REDIRECT/GET  PRINCIPLE
 
@@ -70,6 +73,8 @@ namespace LanguageTutor.Web.Pages.Language
                 languageData.Update(LanguageText);
             }
             else {
+                var currentUser = await _userManager.FindByNameAsync(User.Identity.Name);
+                LanguageText.User = currentUser;
                 languageData.Add(LanguageText);
             }
             

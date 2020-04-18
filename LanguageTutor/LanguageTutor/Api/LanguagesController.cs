@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using LanguageTutor.Core;
 using LanguageTutor.Data;
+using Microsoft.AspNetCore.Identity;
 
 namespace LanguageTutor.Web.Api
 {
@@ -15,17 +16,22 @@ namespace LanguageTutor.Web.Api
     public class LanguagesController : ControllerBase
     {
         private readonly LanguageDbContext _context;
+        private readonly UserManager<LanguageUser> _userManager;
 
-        public LanguagesController(LanguageDbContext context)
+        public LanguagesController(LanguageDbContext context, UserManager<LanguageUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: api/Languages
         [HttpGet]
-        public IEnumerable<LanguageText> GetLanguageText()
+        public  async Task<IEnumerable<LanguageText>> GetLanguageText()
         {
-            return _context.LanguageText;
+            var currentUser = await _userManager.FindByNameAsync(User.Identity.Name);
+
+            return _context.LanguageText.Where(x => x.User.Id == currentUser.Id).AsEnumerable();
+            //return _context.LanguageText;
         }
 
         // GET: api/Languages/5

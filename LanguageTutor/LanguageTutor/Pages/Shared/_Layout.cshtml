@@ -33,6 +33,18 @@
                     <li><a asp-page="/Index">Home</a></li>
                     <li><a asp-page="/About">About</a></li>
                     <li><a asp-page="/Contact">Contact</a></li>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                       <li><a asp-page="/Account/Login" asp-page-handler="Logout">@User.Identity.Name |Logout</a></li>
+                        //asp-page-handler is like an action
+                    }
+                    else
+                    {
+                        <li><a asp-page="/Account/Login">Log In</a></li>
+                    }
+                                      
+                    
+                    @*<li><a asp-action="Login" asp-controller="Account">Contact</a></li>*@   @*i dont ve controller so this wont work*@
                 </ul>
             </div>
         </div>

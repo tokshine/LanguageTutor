@@ -14,7 +14,7 @@ namespace LanguageTutor.Web.Pages.L1
     public class EditModel : PageModel
     {
         private readonly LanguageTutor.Data.LanguageDbContext _context;
-
+       
         public EditModel(LanguageTutor.Data.LanguageDbContext context)
         {
             _context = context;
@@ -45,7 +45,7 @@ namespace LanguageTutor.Web.Pages.L1
             {
                 return Page();
             }
-
+            
             _context.Attach(LanguageText).State = EntityState.Modified;
 
             try

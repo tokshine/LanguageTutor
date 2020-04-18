@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace LanguageTutor.Core
@@ -29,5 +30,21 @@ namespace LanguageTutor.Core
 
         public LanguageType LanguageType { get; set; }
 
+        public LanguageUser User { get; set; }
+
+    }
+    public class LanguageUser : IdentityUser
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+    }
+
+    public class LoginViewModel
+    {
+        [Required]
+        public string Username { get; set; }
+        [Required]
+        public string Password { get; set; }
+        public bool RememberMe { get; set; }
     }
 }

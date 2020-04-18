@@ -2,11 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LanguageTutor.Core;
 using LanguageTutor.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -26,10 +28,21 @@ namespace LanguageTutor
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //configuring identity
+
+            services.AddIdentity<LanguageUser, IdentityRole>(
+                //you set password policy here
+                cfg => { cfg.User.RequireUniqueEmail = true;
+                    //cfg.Password.RequireDigit = true;
+                    //cfg.Password.RequiredLength = 9;
+                }).AddEntityFrameworkStores<LanguageDbContext>();
+
             services.AddDbContextPool<LanguageDbContext>(o =>
 
                 o.UseSqlServer(Configuration.GetConnectionString("LanguageDB"))         
             );
+
+            services.AddTransient<UserSeeder>();
 
             services.AddScoped<ILanguageData, SqlLanguageData>();//services are scoped to a particular http request
 
@@ -61,6 +74,8 @@ namespace LanguageTutor
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseNodeModules(env);
+            app.UseAuthentication();
+            //app.UseAuthorization(); works in asp.net core 3.0
             app.UseCookiePolicy();
 
             app.UseMvc();

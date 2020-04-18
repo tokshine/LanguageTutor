@@ -98,9 +98,7 @@ namespace LanguageTutor.Data
         {
             return from l in languageTexts
                    orderby l.Text
-                   select l;
-
-           
+                   select l;           
         }
 
         public LanguageText GetById(int id)
