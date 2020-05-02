@@ -27,7 +27,7 @@ namespace LanguageTutor
             _context.Database.EnsureCreated();
 
 
-            var user = await _userManager.FindByEmailAsync("adeife@adeleke.com");
+            var user = await _userManager.FindByEmailAsync("ife@adeleke.com");
 
             //var user = await _userManager.FindByEmailAsync("toks_philip@yahoo.com");
 
@@ -48,11 +48,27 @@ namespace LanguageTutor
 
                     FirstName = "princess",
                     LastName = "ife",
-                    UserName = "adeife@adeleke.com",
-                    Email = "adeife@adeleke.com"
+                    UserName = "ife",
+                    Email = "ife@adeleke.com"
                 };
 
-                var result = await _userManager.CreateAsync(user, "Jersey2010$");
+                var result = await _userManager.CreateAsync(user, "Jersey2010#");
+
+
+
+                //user = new LanguageUser
+                //{
+
+                //    FirstName = "princess",
+                //    LastName = "ife",
+                //    UserName = "adeife@adeleke.com",
+                //    Email = "adeife@adeleke.com"
+                //};
+
+                //var result = await _userManager.CreateAsync(user, "Jersey2010$");
+
+
+
                 //var result = await _userManager.CreateAsync(user, "Weekend2003$");
                 if (result != IdentityResult.Success)
                 {
