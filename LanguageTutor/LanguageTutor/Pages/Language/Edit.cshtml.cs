@@ -38,6 +38,7 @@ namespace LanguageTutor.Web.Pages.Language
             else {
                 ViewData["Title"] = "Add a word/phrase";
                 LanguageText = new LanguageText();
+                LanguageText.LanguageType = LanguageType.YORUBA;
             }
             
             Languages = htmlHelper.GetEnumSelectList<LanguageType>();
