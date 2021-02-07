@@ -30,7 +30,7 @@ namespace LanguageTutor
             {
                 var seeder = scope.ServiceProvider.GetService<UserSeeder>();
                 seeder.SeedAsync().Wait();
-
+                
             }
         }
 
